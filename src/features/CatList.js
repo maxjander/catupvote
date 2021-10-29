@@ -5,6 +5,8 @@ import { setCats } from "./catsSlice";
 const CatList = () => {
 	const dispatch = useDispatch();
 	const catState = useSelector((state) => state.cats);
+	const sortedState = [...catState].sort((a, b) => (a.upvotes > b.upvotes ? -1 : 1));
+	// const sortedCats = catState.sort((a, b) => (a.itemM > b.itemM ? 1 : -1));
 	useEffect(() => {
 		console.log("lifecycle started ");
 		(async () => {
@@ -27,11 +29,13 @@ const CatList = () => {
 		<div>
 			{catState && (
 				<ul>
-					{catState.map((catItem) => (
-						<li key={catItem.id}>
-							<Cat catItem={catItem} />
-						</li>
-					))}
+					{sortedState
+						// .sort((a, b) => (a.upvotes > b.upvotes ? 1 : -1))
+						.map((catItem) => (
+							<li key={catItem.id}>
+								<Cat catItem={catItem} />
+							</li>
+						))}
 				</ul>
 			)}
 		</div>
